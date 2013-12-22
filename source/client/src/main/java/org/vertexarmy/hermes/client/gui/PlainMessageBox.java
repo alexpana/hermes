@@ -1,10 +1,12 @@
 package org.vertexarmy.hermes.client.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import org.vertexarmy.hermes.core.gui.Toolkit;
 import org.vertexarmy.hermes.core.messaging.Message;
 
 /**
@@ -26,6 +28,10 @@ public class PlainMessageBox extends MessageBox {
         textArea.setWrapStyleWord(true);
         textArea.setLineWrap(true);
         textArea.setEditable(false);
+
+        Font messageFont = Toolkit.createFont(
+                new String[] {"Lucida Grande", "Tahoma", "Verdana", "Arial", "Sans-Serif"}, Font.PLAIN, 13);
+        textArea.setFont(messageFont);
 
         scrollPane = new JScrollPane(textArea);
     }

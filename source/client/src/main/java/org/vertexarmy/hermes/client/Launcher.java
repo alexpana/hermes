@@ -16,6 +16,8 @@ import java.util.Properties;
  * Date: 12/22/13
  */
 public class Launcher {
+    private static String version = "0.1.1-ALPHA";
+
     static {
         try {
             UIManager.setLookAndFeel(new WindowsLookAndFeel());
@@ -38,6 +40,7 @@ public class Launcher {
 
         // initialize connection
         ChatWindow chatWindow = new ChatWindow(connection);
+        chatWindow.setTitle("Hermes " + version);
 
         chatWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         chatWindow.addWindowListener(new WindowAdapter() {

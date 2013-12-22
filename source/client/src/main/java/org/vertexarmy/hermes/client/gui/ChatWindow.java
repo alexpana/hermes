@@ -42,7 +42,6 @@ public final class ChatWindow extends JFrame {
     }
 
     private void initComponents() {
-        setTitle("Hermes Client [alpha]");
         messageBox = new PlainMessageBox();
 
         replyTextField = new JTextField();
