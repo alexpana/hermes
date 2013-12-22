@@ -20,6 +20,7 @@ public class Launcher {
         try {
             UIManager.setLookAndFeel(new WindowsLookAndFeel());
         } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
         }
     }
 

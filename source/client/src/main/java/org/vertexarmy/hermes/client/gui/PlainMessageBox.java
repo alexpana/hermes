@@ -1,7 +1,9 @@
 package org.vertexarmy.hermes.client.gui;
 
 import java.awt.BorderLayout;
-import java.util.Date;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import org.vertexarmy.hermes.core.messaging.Message;
 
@@ -10,17 +12,42 @@ import org.vertexarmy.hermes.core.messaging.Message;
  * Date: 12/22/13
  */
 public class PlainMessageBox extends MessageBox {
+    private JScrollPane scrollPane;
     private JTextArea textArea;
 
     public PlainMessageBox() {
-        textArea = new JTextArea();
+        initComponents();
+        initLayout();
+        initListeners();
+    }
 
+    private void initComponents() {
+        textArea = new JTextArea();
+        textArea.setWrapStyleWord(true);
+        textArea.setLineWrap(true);
+        textArea.setEditable(false);
+
+        scrollPane = new JScrollPane(textArea);
+    }
+
+    private void initLayout() {
         this.setLayout(new BorderLayout());
-        this.add(textArea, BorderLayout.CENTER);
+        this.add(scrollPane, BorderLayout.CENTER);
+    }
+
+    private void initListeners() {
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent componentEvent) {
+                scrollToBottom();
+            }
+        });
     }
 
     public void addMessage(Message message) {
+        textArea.setCaretPosition(textArea.getDocument().getLength());
         textArea.append(message.getFrom() + ": " + message.getContent() + "\n");
+        scrollToBottom();
     }
 
     public void addMessages(java.util.List<Message> messageList) {
@@ -29,7 +56,7 @@ public class PlainMessageBox extends MessageBox {
         }
     }
 
-    private String formatTimestamp(Date timestamp) {
-        return String.format("[%d:%d:%d]", 0, 0, 0);
+    private void scrollToBottom() {
+        scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
     }
 }

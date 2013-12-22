@@ -1,21 +1,23 @@
 package org.vertexarmy.hermes.client.gui;
 
-import org.vertexarmy.hermes.client.Connection;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.TimerTask;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import org.vertexarmy.hermes.client.Connection;
 
 /**
  * User: Alex
  * Date: 12/22/13
  */
 public final class ChatWindow extends JFrame {
+    private final Connection connection;
     private MessageBox messageBox;
     private JTextField replyTextField;
-    private final Connection connection;
     private java.util.Timer timer;
 
     public ChatWindow(final Connection connection) {
@@ -51,7 +53,8 @@ public final class ChatWindow extends JFrame {
         content.setLayout(new BorderLayout());
         content.getInsets().set(3, 3, 3, 3);
 
-        content.add(new JScrollPane(messageBox), BorderLayout.CENTER);
+
+        content.add(messageBox, BorderLayout.CENTER);
         content.add(replyTextField, BorderLayout.SOUTH);
 
         setLayout(new BorderLayout());
@@ -70,10 +73,16 @@ public final class ChatWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String message = actionEvent.getActionCommand();
+                if (message == null || message.trim().length() == 0) {
+                    return;
+                }
+
+                // send the message
                 if (connection.sendMessage(message)) {
                     replyTextField.setText(null);
                 }
 
+                // ask for the unread messages
                 messageBox.addMessages(connection.retrieveMessages());
             }
         });

@@ -77,9 +77,11 @@ public class Connection {
         return Arrays.asList(reply.getMessages());
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void statusUpdate() {
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public boolean initializeConnection() {
         Request request = Request.builder()
                 .type(Request.Type.INITIALIZE_CONNECTION)
@@ -103,19 +105,6 @@ public class Connection {
     }
 
     private Reply awaitReply() {
-        try {
-            byte[] replyBuffer = socket.recv();
-            ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(replyBuffer));
-            return (Reply) objectInputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private Reply awaitReply(int timeout) {
         try {
             byte[] replyBuffer = socket.recv();
             ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(replyBuffer));
