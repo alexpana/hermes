@@ -1,0 +1,11 @@
+- client messagebox should have word wrap
+- messages should have timestamp
+- client should not freeze if started before the server
+- client should display presence information about peers
+- typing status should be relayed
+- conversation logs should be saved
+- server should use a logger to log granular information
+- smileys should be available
+- client needs a pretty MessageBox
+- scrollbar lags behind the messages
+- client needs to flash the window when new messages are received
